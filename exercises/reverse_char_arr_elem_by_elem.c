@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+
 #include <string.h>
 #include <stdio.h>
 
@@ -7,6 +9,11 @@ void reverse_char_arr_elem_by_elem()
 	char arr[] = "abcdefg";
 	int left = 0;
 	int right = (int)strlen(arr) - 1;
+	//for (int i = 0; i <= right; i++)
+	//{
+	//	scanf("%c", arr + i);
+	//}
+
 	printf("%s\n", arr);
 	while (left < right)
 	{
@@ -21,3 +28,4 @@ void reverse_char_arr_elem_by_elem()
 }
 
 // ADD 20250301
+// MOD 20250302

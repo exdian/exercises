@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="main.c" />
     <ClCompile Include="reverse_char_arr_elem_by_elem.c" />
+    <ClCompile Include="reverse_int_arr_elem_by_elem.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />

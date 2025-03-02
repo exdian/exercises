@@ -21,6 +21,9 @@
     <ClCompile Include="reverse_char_arr_elem_by_elem.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="reverse_int_arr_elem_by_elem.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
