@@ -6,6 +6,7 @@
 // 字符串按元素反向
 void reverse_char_arr_elem_by_elem()
 {
+	printf("\n字符串按元素反向\n");
 	char arr[] = "abcdefg";
 	int left = 0;
 	int right = (int)strlen(arr) - 1;
@@ -28,4 +29,4 @@ void reverse_char_arr_elem_by_elem()
 }
 
 // ADD 20250301
-// MOD 20250302
+// MOD 20250302 20250303
