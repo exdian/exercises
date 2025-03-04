@@ -5,6 +5,7 @@
 // 整型数组按字节反向
 void reverse_int_arr_byte_by_byte()
 {
+	printf("\n整型数组按字节反向\n");
 	int arr[8] = { 0 };
 	int length = sizeof(arr) / sizeof(arr[0]);
 	for (int i = 0; i < length; i++)

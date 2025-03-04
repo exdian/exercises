@@ -27,6 +27,9 @@
     <ClCompile Include="reverse_int_arr_byte_by_byte.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="reverse_float_arr_byte_by_byte.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
