@@ -15,6 +15,7 @@ void reverse_float_arr_byte_by_byte()
 	}
 
 	printf("\n\n·´Ïòºó\n");
+	//reverse_any_arr_byte_by_byte(arr, &arr + 1);
 	while (low < high)
 	{
 		char temp = *low;

@@ -16,6 +16,7 @@ void reverse_char_arr_elem_by_elem()
 	//}
 
 	printf("%s\n", arr);
+	//reverse_any_arr_byte_by_byte(arr, &arr + 1);
 	while (left < right)
 	{
 		char temp = arr[left];
@@ -27,6 +28,3 @@ void reverse_char_arr_elem_by_elem()
 
 	printf("%s\n", arr);
 }
-
-// ADD 20250301
-// MOD 20250302 20250303
