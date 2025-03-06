@@ -1,10 +1,10 @@
 #include <assert.h>
 
 // 任意连续数据按字节反向
-void* reverse_any_arr_byte_by_byte(void* base, void* end)
+void* reverse_any_arr_byte_by_byte(void* start, void* end)
 {
-	assert(base && end);
-	char* low = (char*)base;
+	assert(start && end);
+	char* low = (char*)start;
 	char* high = (char*)end - 1;
 	while (low < high)
 	{
@@ -15,8 +15,7 @@ void* reverse_any_arr_byte_by_byte(void* base, void* end)
 		high -= 1;
 	}
 
-	return base;
+	return start;
 }
-
 // struct a arr[2];
 // reverse_any_arr_byte_by_byte(arr, &arr + 1);

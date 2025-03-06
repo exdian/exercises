@@ -33,6 +33,9 @@
     <ClCompile Include="reverse_any_arr_byte_by_byte.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="reverse_any_arr_bit_by_bit.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

@@ -2,6 +2,7 @@
 
 int main()
 {
+	reverse_any_arr_bit_by_bit(0, 0);
 	reverse_any_arr_byte_by_byte(0, 0);
 	reverse_float_arr_byte_by_byte();
 	reverse_int_arr_byte_by_byte();
