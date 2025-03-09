@@ -10,3 +10,5 @@ int recursion_fib_seq_1(int n);
 int iteration_fib_seq(int n);
 int recursion_fib_seq_2(int n, int* last);
 void test_fib_seq();
+void print_any_data_bit_by_bit(void* start, unsigned int num);
+void test_print_byb();
