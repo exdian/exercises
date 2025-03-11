@@ -2,6 +2,7 @@
 
 int main()
 {
+	test_recursion_reverse();
 	test_print_byb();
 	test_fib_seq();
 	reverse_any_arr_bit_by_bit(0, 0);

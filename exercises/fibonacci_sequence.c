@@ -51,6 +51,8 @@ int recursion_fib_seq_2(int n, int* last)
 		int temp2 = recursion_fib_seq_2(n - 2, last);
 		*last = temp1;
 		return temp1 + temp2;
+		*last = recursion_fib_seq_2(n - 1, last); // error
+		return *last + recursion_fib_seq_2(n - 2, last); // err
 	}
 
 	return *last;

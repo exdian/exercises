@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <assert.h>
 // 任意数据按位打印，从最低位开始
 void print_any_data_bit_by_bit(void* start, unsigned int num)
 {
+	assert(start != NULL);
 	while (num)
 	{
 		for (int i = 0; (i < 8) && (num > 0); i++)
