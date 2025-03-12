@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 // 任意数据按位打印，从最低位开始
-void print_any_data_bit_by_bit(void* start, unsigned int num)
+void print_any_data_bit_by_bit_1(void* start, unsigned int num)
 {
 	assert(start != NULL);
 	while (num)
@@ -20,8 +20,34 @@ void print_any_data_bit_by_bit(void* start, unsigned int num)
 
 }
 
+// 从最高位开始，递归实现
+void print_any_data_bit_by_bit_2(void* start, unsigned int num)
+{
+	assert(start != NULL);
+	if (num > 8)
+	{
+		print_any_data_bit_by_bit_2((char*)start + 1, num - 8);
+	}
+
+	int i = 7;
+	if (num < 8)
+	{
+		i = num - 1;
+	}
+
+	for (; (i >= 0) && (num > 0); i--)
+	{
+		int oup = ((*(char*)start) & (1 << i)) >> i;
+		printf("%d ", oup);
+		num -= 1;
+	}
+
+}
+
 void test_print_byb()
 {
 	int temp = (int)0b10101100110011100011100011010010;
-	print_any_data_bit_by_bit(&temp, (int)sizeof(temp) * 8 - 1);
+	print_any_data_bit_by_bit_1(&temp, (int)sizeof(temp) * 8 - 1);
+	printf("\n");
+	print_any_data_bit_by_bit_2(&temp, (int)sizeof(temp) * 8 - 1);
 }
