@@ -29,13 +29,7 @@ void print_any_data_bit_by_bit_2(void* start, unsigned int num)
 		print_any_data_bit_by_bit_2((char*)start + 1, num - 8);
 	}
 
-	int i = 7;
-	if (num < 8)
-	{
-		i = num - 1;
-	}
-
-	for (; (i >= 0) && (num > 0); i--)
+	for (int i = num < 8 ? num - 1 : 7; (i >= 0) && (num > 0); i--)
 	{
 		int oup = ((*(char*)start) & (1 << i)) >> i;
 		printf("%d ", oup);
