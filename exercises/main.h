@@ -1,4 +1,5 @@
 #pragma once
+#include <stdio.h>
 
 void reverse_char_arr_elem_by_elem();
 void reverse_int_arr_elem_by_elem();
@@ -15,3 +16,4 @@ void print_any_data_bit_by_bit_2(void* start, unsigned int num);
 void test_print_byb();
 void* recursion_revrs_any_by_byte(void* start, void* end);
 void test_recursion_reverse();
+void* bubble_sort_linklist(void** head, size_t offsetof_next, int (*pfunc)(const void* elem1, const void* elem2));

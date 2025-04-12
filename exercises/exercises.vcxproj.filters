@@ -45,6 +45,9 @@
     <ClCompile Include="recursion_revrs_any_by_byte.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="sort_any_linklist_by_custom_rules.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

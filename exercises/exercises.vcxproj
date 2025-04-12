@@ -137,6 +137,7 @@
     <ClCompile Include="reverse_float_arr_byte_by_byte.c" />
     <ClCompile Include="reverse_int_arr_byte_by_byte.c" />
     <ClCompile Include="reverse_int_arr_elem_by_elem.c" />
+    <ClCompile Include="sort_any_linklist_by_custom_rules.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
