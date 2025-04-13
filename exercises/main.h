@@ -18,3 +18,4 @@ void* recursion_revrs_any_by_byte(void* start, void* end);
 void test_recursion_reverse();
 void* bubble_sort_linklist(void** head, size_t offsetof_next, int (*pfunc)(const void* elem1, const void* elem2));
 void* merge_sort_linklist(void** head, size_t offsetof_next, int (*pfunc)(const void* elem1, const void* elem2));
+void test_sort_linklist();

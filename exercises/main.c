@@ -2,6 +2,7 @@
 
 int main()
 {
+	test_sort_linklist();
 	test_recursion_reverse();
 	test_print_byb();
 	test_fib_seq();

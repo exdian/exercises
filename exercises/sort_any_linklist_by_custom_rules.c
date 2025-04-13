@@ -1,7 +1,8 @@
 // The use is similar to qsort
 // Modify the header of the linked list and return the end of the linked list
 
-#include <stdio.h>
+#define _CRT_SECURE_NO_WARNINGS 1
+#include <stdlib.h>
 
 void* merge_sort_linklist(
 	                      void** head, // address of header of linklist
@@ -47,7 +48,7 @@ void* merge_sort_linklist(
 		left = *(void**)((char*)left + offsetof_next);
 	}
 
-	*head = cur; // 修改了链表头，只有第一次递归到最深层修改的才是真正的 *head，其余分支都是修改了局部变量 right
+	*head = cur; // 修改了链表头，只有第一次递归到最深层的那个分支修改的才是真正的 *head，其余分支都是修改了局部变量 right
 	while (left != NULL && right != NULL) // 递的过程不进入，归的过程才进入。如果这里按照常见的方法封装成函数一个一个节点递归的话可能导致栈溢出
 	{
 		if (pfunc(left, right) > 0)
@@ -152,4 +153,94 @@ void* bubble_sort_linklist(
 	}
 
 	return ret;
+}
+/* = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */
+// example
+#include <stdio.h>
+#include <time.h>
+#include <stddef.h>
+typedef struct Node
+{
+	size_t n;
+	struct Node* next;
+} Node;
+
+static int asc(const void* elem1, const void* elem2) // 升序
+{
+	return ((Node*)elem1)->n - ((Node*)elem2)->n > 0 ? 1 : 0;
+}
+
+static int desc(const void* elem1, const void* elem2) // 降序
+{
+	return ((Node*)elem2)->n - ((Node*)elem1)->n > 0 ? 1 : 0;
+}
+
+void test_sort_linklist()
+{
+	size_t node_num = 0;
+	int chk = 0;
+	do
+	{
+		printf("输入节点数:> ");
+		chk = scanf("%zu", &node_num);
+		while (getchar() != '\n');
+	} while (chk != 1);
+
+	Node* head = NULL;
+	Node* last = NULL;
+	if (node_num > 0)
+	{
+		while ((last = head = malloc(sizeof(Node))) == NULL)
+		{
+			printf("初始化失败，按 Enter 键重试");
+			while (getchar() != '\n');
+		}
+
+		last->n = 0;
+		for (size_t i = 1; i < node_num; i++)
+		{
+			while ((last->next = malloc(sizeof(Node))) == NULL)
+			{
+				printf("初始化失败，按 Enter 键重试");
+				while (getchar() != '\n');
+			}
+
+			last = last->next;
+			last->n = i;
+		}
+
+		last->next = NULL;
+		printf("已创建 %zu 个节点的链表\n", node_num);
+	}
+
+	clock_t start = clock();
+	bubble_sort_linklist(&head, offsetof(Node, next), desc);
+	bubble_sort_linklist(&head, offsetof(Node, next), asc);
+	clock_t end = clock();
+	double cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+	printf("极端状态下冒泡排序 %zu 个节点 2 次的时间：%.4lf 秒\n", node_num, cpu_time_used);
+	// debug 版本中极端状态下冒泡排序 20000 个节点 2 次的时间：2.1020 秒
+	// release 版本中极端状态下冒泡排序 20000 个节点 2 次的时间：1.0210 秒
+	// release 版本中极端状态下冒泡排序 100000 个节点 2 次的时间：35.2230 秒
+	start = clock();
+	merge_sort_linklist(&head, offsetof(Node, next), desc);
+	merge_sort_linklist(&head, offsetof(Node, next), asc);
+	end = clock();
+	cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+	printf("极端状态下归并排序 %zu 个节点 2 次的时间：%.4lf 秒\n", node_num, cpu_time_used);
+	// debug 版本中极端状态下归并排序 20000 个节点 2 次的时间：0.0060 秒
+	// release 版本中极端状态下归并排序 20000 个节点 2 次的时间：0.0020 秒
+	// release 版本中极端状态下归并排序 100000 个节点 2 次的时间：0.0120 秒
+	while (getchar() != '\n');
+	while (NULL != head)
+	{
+		last = head;
+		head = head->next;
+		free(last);
+	}
+
+	head = NULL;
+	last = NULL;
+	printf("已释放内存\n");
+	while (getchar() != '\n');
 }
