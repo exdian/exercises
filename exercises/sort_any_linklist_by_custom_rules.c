@@ -21,20 +21,20 @@ void* merge_sort_linklist(
 	}
 
 	// 快慢指针找到中点。运行到这里说明至少有 2 个节点
-	void* slow = *head;
-	void* fast = *(void**)((char*)*head + offsetof_next); // (char*)node + offsetof_next 得到下一个节点指针的地址，所以强制类型转换二级指针
-	while (fast != NULL && *(void**)((char*)fast + offsetof_next) != NULL) // 当只有 2 个节点时不进入
+	void* left = *head;
+	void* right = *(void**)((char*)*head + offsetof_next); // (char*)node + offsetof_next 得到下一个节点指针的地址，所以强制类型转换二级指针
+	while (right != NULL && *(void**)((char*)right + offsetof_next) != NULL) // 当只有 2 个节点时不进入
 	{
-		slow = *(void**)((char*)slow + offsetof_next);
-		fast = *(void**)((char*)fast + offsetof_next);
-		fast = *(void**)((char*)fast + offsetof_next);
+		left = *(void**)((char*)left + offsetof_next);
+		right = *(void**)((char*)right + offsetof_next);
+		right = *(void**)((char*)right + offsetof_next);
 	}
 
-	void* right = *(void**)((char*)slow + offsetof_next);
-	*(void**)((char*)slow + offsetof_next) = NULL; // 切断链表
+	right = *(void**)((char*)left + offsetof_next);
+	*(void**)((char*)left + offsetof_next) = NULL; // 切断链表
 	merge_sort_linklist(head, offsetof_next, pfunc); // 递归层次最深为 log2(node_count)，向上取整。
 	merge_sort_linklist(&right, offsetof_next, pfunc);
-	void* left = *head;
+	left = *head;
 	// left 和 right 在此时不可能为 NULL
 	void* cur = NULL;
 	if (pfunc(left, right) > 0)
@@ -49,7 +49,7 @@ void* merge_sort_linklist(
 	}
 
 	*head = cur; // 修改了链表头，只有第一次递归到最深层的那个分支修改的才是真正的 *head，其余分支都是修改了局部变量 right
-	while (left != NULL && right != NULL) // 递的过程不进入，归的过程才进入。如果这里按照常见的方法封装成函数一个一个节点递归的话可能导致栈溢出
+	while (left != NULL && right != NULL) // 递的过程不进入，归的过程才进入。如果这里按照常见的方法封装成函数逐节点递归的话可能导致栈溢出
 	{
 		if (pfunc(left, right) > 0)
 		{
@@ -218,19 +218,19 @@ void test_sort_linklist()
 	bubble_sort_linklist(&head, offsetof(Node, next), asc);
 	clock_t end = clock();
 	double cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-	printf("极端状态下冒泡排序 %zu 个节点 2 次的时间：%.4lf 秒\n", node_num, cpu_time_used);
-	// debug 版本中极端状态下冒泡排序 20000 个节点 2 次的时间：2.1020 秒
-	// release 版本中极端状态下冒泡排序 20000 个节点 2 次的时间：1.0210 秒
-	// release 版本中极端状态下冒泡排序 100000 个节点 2 次的时间：35.2230 秒
+	printf("极端状态下冒泡排序 %zu 个节点 2 次的时间: %.4lf 秒\n", node_num, cpu_time_used);
+	// debug 版本中极端状态下冒泡排序 20000 个节点 2 次的时间: 2.1020 秒
+	// release 版本中极端状态下冒泡排序 20000 个节点 2 次的时间: 1.0210 秒
+	// release 版本中极端状态下冒泡排序 100000 个节点 2 次的时间: 35.2230 秒
 	start = clock();
 	merge_sort_linklist(&head, offsetof(Node, next), desc);
 	merge_sort_linklist(&head, offsetof(Node, next), asc);
 	end = clock();
 	cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-	printf("极端状态下归并排序 %zu 个节点 2 次的时间：%.4lf 秒\n", node_num, cpu_time_used);
-	// debug 版本中极端状态下归并排序 20000 个节点 2 次的时间：0.0060 秒
-	// release 版本中极端状态下归并排序 20000 个节点 2 次的时间：0.0020 秒
-	// release 版本中极端状态下归并排序 100000 个节点 2 次的时间：0.0120 秒
+	printf("极端状态下归并排序 %zu 个节点 2 次的时间: %.4lf 秒\n", node_num, cpu_time_used);
+	// debug 版本中极端状态下归并排序 20000 个节点 2 次的时间: 0.0060 秒
+	// release 版本中极端状态下归并排序 20000 个节点 2 次的时间: 0.0020 秒
+	// release 版本中极端状态下归并排序 100000 个节点 2 次的时间: 0.0120 秒
 	while (getchar() != '\n');
 	while (NULL != head)
 	{
