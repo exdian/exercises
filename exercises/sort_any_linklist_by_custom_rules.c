@@ -2,7 +2,7 @@
 // Modify the header of the linked list and return the end of the linked list
 
 #define _CRT_SECURE_NO_WARNINGS 1
-#include <stdlib.h>
+#include <stddef.h>
 
 void* merge_sort_linklist(
 	                      void** head, // address of header of linklist
@@ -35,7 +35,45 @@ void* merge_sort_linklist(
 	merge_sort_linklist(head, offsetof_next, pfunc); // 递归层次最深为 log2(node_count)，向上取整。
 	merge_sort_linklist(&right, offsetof_next, pfunc);
 	left = *head;
-	// left 和 right 在此时不可能为 NULL
+	/*
+	此时 left 和 right 不可能为 NULL，
+	因此这里将循环的第一次展开反而性能更优，能少一次 left != NULL && right != NULL 计算，也能省去 dummy 变量，减小函数栈帧
+	void* dummy = NULL;
+	void* cur = &dummy;
+	while (left != NULL && right != NULL)
+	{
+		if (pfunc(left, right) > 0)
+		{
+			*(void**)cur = right; // 修改 cur 指向的地址空间
+			cur = (void*)((char*)right + offsetof_next); // 获取下一个节点的地址
+			right = *(void**)cur;
+		}
+		else
+		{
+			*(void**)cur = left;
+			cur = (void*)((char*)left + offsetof_next);
+			left = *(void**)cur;
+		}
+
+	}
+
+	*head = dummy;
+	while (left != NULL)
+	{
+		*(void**)cur = left;
+		cur = (void*)((char*)left + offsetof_next);
+		left = *(void**)cur;
+	}
+
+	while (right != NULL)
+	{
+		*(void**)cur = right;
+		cur = (void*)((char*)right + offsetof_next);
+		right = *(void**)cur;
+	}
+
+	return (void*)((char*)cur - offsetof_next);
+	*/
 	void* cur = NULL;
 	if (pfunc(left, right) > 0)
 	{
@@ -157,8 +195,8 @@ void* bubble_sort_linklist(
 /* = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */
 // example
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
-#include <stddef.h>
 typedef struct Node
 {
 	size_t n;
