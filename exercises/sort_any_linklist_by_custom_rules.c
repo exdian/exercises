@@ -22,7 +22,7 @@ void* merge_sort_linklist(
 
 	// 快慢指针找到中点。运行到这里说明至少有 2 个节点
 	void* left = *head;
-	void* right = *(void**)((char*)*head + offsetof_next); // (char*)node + offsetof_next 得到下一个节点指针的地址，所以强制类型转换二级指针
+	void* right = *(void**)((char*)*head + offsetof_next); // (char*)node + offsetof_next 得到下一个节点指针变量的地址，所以强制类型转换二级指针
 	while (right != NULL && *(void**)((char*)right + offsetof_next) != NULL) // 当只有 2 个节点时不进入
 	{
 		left = *(void**)((char*)left + offsetof_next);
@@ -104,18 +104,24 @@ void* merge_sort_linklist(
 
 	}
 
-	while (left != NULL)
+	if (left != NULL)
 	{
 		*(void**)((char*)cur + offsetof_next) = left;
-		cur = left;
-		left = *(void**)((char*)left + offsetof_next);
 	}
-
-	while (right != NULL)
+	else
 	{
 		*(void**)((char*)cur + offsetof_next) = right;
-		cur = right;
-		right = *(void**)((char*)right + offsetof_next);
+	}
+
+	while (1) // 找到链表尾
+	{
+		void* temp = *(void**)((char*)cur + offsetof_next);
+		if (NULL == temp)
+		{
+			break;
+		}
+
+		cur = temp;
 	}
 
 	return cur;
